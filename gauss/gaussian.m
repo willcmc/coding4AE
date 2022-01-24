@@ -36,9 +36,22 @@ classdef gaussian
             b_pivoted = b(final_idxs, :);
         end
 
-        function output = eliminate(A, b)
+        function x = eliminate(A, b)
             % ELIMINATES post pivoting
-            [A_piv, b_piv] = gaussian.pivoter(A, b)
+            [nrow, ncol] = size(A);
+            [A_piv, b_piv] = gaussian.pivoter(A, b);
+
+            A_aug = [A_piv b_piv];
+            for i = 1:ncol
+                for j = 1:nrow
+                    if j==i
+                        continue;
+                    end
+                    A_aug(j,:) = A_aug(j,:) - A_aug(j,i)*A_aug(i,:)/A_aug(i,i);
+                end
+            end
+
+            x = round(A_aug(:, end)./diag(A_aug(:, 1:end-1)), 5);
         end
     end
 end
