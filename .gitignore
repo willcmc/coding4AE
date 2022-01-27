@@ -55,3 +55,6 @@ octave-workspace
 *.exe
 *.out
 *.app
+
+# Exportables
+*.zip
