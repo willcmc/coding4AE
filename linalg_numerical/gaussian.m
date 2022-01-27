@@ -5,7 +5,8 @@ classdef gaussian
             A_scaled = zeros(size(A));
             [nrow, ncol] = size(A);
             for i = 1:nrow
-                divisor = max(A(i,:));
+                [~, idx] = max(abs(A(i,:)));
+                divisor = A(i,idx);
                 A_scaled(i,:) = A(i,:)/divisor;
             end
         end
@@ -28,7 +29,7 @@ classdef gaussian
 
             max_idxs = zeros([nrow 1]);
             for i = 1:nrow
-                [~, idx] = max(A_sc(i,:));
+                [~, idx] = max(abs(A_sc(i,:)));
                 max_idxs(i) = idx;
             end
             [~, final_idxs] = sort(max_idxs);
@@ -36,12 +37,12 @@ classdef gaussian
             b_pivoted = b(final_idxs, :);
         end
 
-        function x = eliminate(A, b)
+        function x = jordan_eliminate(A, b)
             % ELIMINATES post pivoting
             [nrow, ncol] = size(A);
             [A_piv, b_piv] = gaussian.pivoter(A, b);
 
-            A_aug = [A_piv b_piv];
+            A_aug = [A_piv b_piv]
             for i = 1:ncol
                 for j = 1:nrow
                     if j==i
@@ -52,6 +53,25 @@ classdef gaussian
             end
 
             x = round(A_aug(:, end)./diag(A_aug(:, 1:end-1)), 5);
+        end
+
+        function x = gauss_eliminate(A, b)
+            % ELIMINATES post pivoting
+            [nrow, ncol] = size(A);
+            [A_piv, b_piv] = gaussian.pivoter(A, b);
+
+            A_aug = [A_piv b_piv];
+            for i = 1:ncol
+                for j = i+1:nrow
+                    A_aug(j,:) = A_aug(j,:) - A_aug(j,i)*A_aug(i,:)/A_aug(i,i);
+                end
+            end
+            A_aug
+            x = zeros(nrow, 1);
+
+            for i=nrow:-1:1
+                x(i) = (A_aug(i,end) - A_aug(i,1:end-1)*x)/A(i,i);
+            end
         end
     end
 end
