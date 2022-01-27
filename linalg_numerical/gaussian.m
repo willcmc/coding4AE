@@ -28,10 +28,13 @@ classdef gaussian
             end
 
             max_idxs = zeros([nrow 1]);
-            for i = 1:nrow
-                [~, idx] = max(abs(A_sc(i,:)));
+            for i = 1:ncol
+                [~, idx] = max(abs(A_sc(:,i)));
                 max_idxs(i) = idx;
             end
+
+            max_idxs
+
             [~, final_idxs] = sort(max_idxs);
             A_pivoted = A(final_idxs, :);
             b_pivoted = b(final_idxs, :);
