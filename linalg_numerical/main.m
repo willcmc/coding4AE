@@ -1,4 +1,5 @@
 % Asm4_19AE10037
+% object oriented approach is taken, please refer to gaussian.m for the detailed methods and modules
 
 clear all
 
