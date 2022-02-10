@@ -1,21 +1,16 @@
-% Asm4_19AE10037
-% object oriented approach is taken, please refer to gaussian.m for the detailed methods and modules
+% Asm6_19AE10037
+% object oriented approach is taken, please refer to jacobi.m for the detailed methods and modules
 
 clear all
 
-A = [0 4.4 3 -6.6; 0.4 3.6 0 8.4; -2 -6.2 5 0; 1 0 -7.6 3];
-b = [-4.65; 4.62; -4.35; 5.97];
+% A = [0 4.4 3 -6.6; 0.4 3.6 0 8.4; -2 -6.2 5 0; 1 0 -7.6 3];
+% b = [-4.65; 4.62; -4.35; 5.97];
 
-% Solution to Ax=b from Gaussian Elimination
-% x_gaussian = gaussian.gauss_eliminate(A,b) 
+A = [5 -2 3 0;-3 9 1 -2;2 -1 -7 1; 4 3 -5 7]
+b = [-1; 2; 3; 0.5]
 
-% Inverse using Gauss-Jordan Elimination
-% A_inv = gaussian.jordan_inverse(A)
+% Solution to Ax=b from Seidel Iterations
+x_seidel = jacobi.seidel(A,b)
 
-% Solution to Ax=b from Gauss-Jordan Elimination
-% x_jordan = gaussian.jordan_eliminate(A,b)
-
-% Solution to Ax=b from Jacobi Iterations
-x_jacobi = jacobi.simultaneous(A,b)
-
-% x_T = T(A,b,[0 0 0 0]', 1e-5)
+% Solution to Ax=b from SOR-Seidel Iterations
+x_SOR = jacobi.SOR(A, b, 1.4)
