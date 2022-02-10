@@ -19,9 +19,9 @@ function df = mynumdiff(f, x, method)
         error("Specify method as either 'central', 'forward', or 'backward'.", 3, "Unsupported method invoked.");
     end
 
-    n = size(f,2);
+    n = max(size(f));
 
-    if size(x,2) ~= n
+    if max(size(f)) ~= n
         error("Provide equal-sized function values and input grid.", 2, "Incompatible sizes of f and x");
     end
     
